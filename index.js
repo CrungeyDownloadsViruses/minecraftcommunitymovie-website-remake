@@ -14,7 +14,7 @@ puppeteer.use(StealthPlugin());
 
 
 (async () => {
-const browser1 = await puppeteer.launch({headless: false});
+const browser1 = await puppeteer.launch({headless: true});
     const page1 = await browser1.newPage();
 
     // navigate to a URL
@@ -24,13 +24,13 @@ const browser1 = await puppeteer.launch({headless: false});
 
     const html = await page1.content();
 
-    console.log(html.split(`<span class="text-secondary-300">`)[1].split(`</span>`)[0]);
+    //console.log(html.split(`<span class="text-secondary-300">`)[1].split(`</span>`)[0]);
     phase = html.split(`<span class="text-secondary-300">`)[1].split(`</span>`)[0];
     
-    console.log(html.split(`<p>`)[2].split(`</p>`)[0]);
+    //console.log(html.split(`<p>`)[2].split(`</p>`)[0]);
     message = html.split(`<p>`)[2].split(`</p>`)[0];
     
-    console.log(html.split(`<span class="text-sm text-secondary-300">`)[1].split(`</span>`)[0])
+    //console.log(html.split(`<span class="text-sm text-secondary-300">`)[1].split(`</span>`)[0])
     totalusers = html.split(`<span class="text-sm text-secondary-300">`)[1].split(`</span>`)[0];
     
     //repeat 21 times
@@ -38,7 +38,7 @@ const browser1 = await puppeteer.launch({headless: false});
         //console.log(html.split(`<p class="text-secondary-300 text-center">`)[i + 1].split(`</p>`)[0] + ": " + html.split(`<p class="text-lg font-medium text-secondary-350">`)[i + 1].split(`</p>`)[0]);
         roles.push(html.split(`<p class="text-secondary-300 text-center">`)[i + 1].split(`</p>`)[0] + ": " + html.split(`<p class="text-lg font-medium text-secondary-350">`)[i + 1].split(`</p>`)[0]);
     }
-    console.log(roles);
+    //console.log(roles);
     // wait for the challenge to resolve
     
 
@@ -51,7 +51,7 @@ const browser1 = await puppeteer.launch({headless: false});
 
 setInterval(async () => {
     // set up browser environment
-    const browser = await puppeteer.launch({headless: false});
+    const browser = await puppeteer.launch({headless: true});
     const page = await browser.newPage();
 
     // navigate to a URL
@@ -61,13 +61,13 @@ setInterval(async () => {
 
     const html = await page.content();
 
-    console.log(html.split(`<span class="text-secondary-300">`)[1].split(`</span>`)[0]);
+    //console.log(html.split(`<span class="text-secondary-300">`)[1].split(`</span>`)[0]);
     phase = html.split(`<span class="text-secondary-300">`)[1].split(`</span>`)[0];
     phase = phase.replaceAll(" ","&#8193;");
-    console.log(html.split(`<p>`)[2].split(`</p>`)[0]);
+    //console.log(html.split(`<p>`)[2].split(`</p>`)[0]);
     message = html.split(`<p>`)[2].split(`</p>`)[0];
     message = message.replaceAll(" ","&#8193;");
-    console.log(html.split(`<span class="text-sm text-secondary-300">`)[1].split(`</span>`)[0])
+    //console.log(html.split(`<span class="text-sm text-secondary-300">`)[1].split(`</span>`)[0])
     totalusers = html.split(`<span class="text-sm text-secondary-300">`)[1].split(`</span>`)[0];
     
     //repeat 21 times
