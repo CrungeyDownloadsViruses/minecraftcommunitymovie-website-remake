@@ -11,7 +11,9 @@ let roles = [];
 
 // add the stealth plugin
 puppeteer.use(StealthPlugin());
-async () => {
+
+
+(async () => {
 const browser1 = await puppeteer.launch({headless: false});
     const page1 = await browser1.newPage();
 
@@ -24,8 +26,10 @@ const browser1 = await puppeteer.launch({headless: false});
 
     console.log(html.split(`<span class="text-secondary-300">`)[1].split(`</span>`)[0]);
     phase = html.split(`<span class="text-secondary-300">`)[1].split(`</span>`)[0];
+    
     console.log(html.split(`<p>`)[2].split(`</p>`)[0]);
     message = html.split(`<p>`)[2].split(`</p>`)[0];
+    
     console.log(html.split(`<span class="text-sm text-secondary-300">`)[1].split(`</span>`)[0])
     totalusers = html.split(`<span class="text-sm text-secondary-300">`)[1].split(`</span>`)[0];
     
@@ -36,16 +40,15 @@ const browser1 = await puppeteer.launch({headless: false});
     }
     console.log(roles);
     // wait for the challenge to resolve
-    await new Promise(function (resolve) {
-        setTimeout(resolve, 10000);
-    });
+    
 
     // take page screenshot
     //await page.screenshot({ path: 'screenshot.png' });
 
     // close the browser instance
     await browser1.close();
-}
+})();
+
 setInterval(async () => {
     // set up browser environment
     const browser = await puppeteer.launch({headless: false});
@@ -60,8 +63,10 @@ setInterval(async () => {
 
     console.log(html.split(`<span class="text-secondary-300">`)[1].split(`</span>`)[0]);
     phase = html.split(`<span class="text-secondary-300">`)[1].split(`</span>`)[0];
+    phase = phase.replaceAll(" ","&#8193;");
     console.log(html.split(`<p>`)[2].split(`</p>`)[0]);
     message = html.split(`<p>`)[2].split(`</p>`)[0];
+    message = message.replaceAll(" ","&#8193;");
     console.log(html.split(`<span class="text-sm text-secondary-300">`)[1].split(`</span>`)[0])
     totalusers = html.split(`<span class="text-sm text-secondary-300">`)[1].split(`</span>`)[0];
     
@@ -72,9 +77,7 @@ setInterval(async () => {
     }
     console.log(roles);
     // wait for the challenge to resolve
-    await new Promise(function (resolve) {
-        setTimeout(resolve, 10000);
-    });
+    
 
     // take page screenshot
     //await page.screenshot({ path: 'screenshot.png' });
@@ -92,7 +95,13 @@ app.get('/', (req, res) => {
     let document = fs.readFileSync('./index.html', 'utf-8');
     document = document.replace('currentstagevariable', phase);
     document = document.replace('messagevariable', message);
-    res.sendFile(document);
+    let rolescode = "";
+    for(e = 0; e <= roles.length - 1; e++)
+    {
+        rolescode = rolescode + `<div style="height: 20px;width: 370px;background: #353535;font-family: mojang-regular;margin-right: 30px;padding: 15px;box-shadow: 5px 5px 0px 0px rgba(0,0,0,0.75);color: lime; margin-bottom: 25px; display: inline-block;">` + roles[e] + `</div>`;
+    }
+    document = document.replace('insertrolesvar', rolescode);
+    res.send(document);
     console.log('hi');
 });
 
